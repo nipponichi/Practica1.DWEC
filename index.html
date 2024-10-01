@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 1</title>
+</head>
+<body>
+    <header align="center">
+        <h1>Práctica 1 HTML</h1>
+        <div class="menu_section">
+            <nav>
+                <ul class="menu__list" align="left">
+                    <li class="menu__item menu__item--active"><a href="index.html" class="menu__link">Home</a></li>
+                    <li class="menu__item menu__item"><a href="about.html" class="menu__link">About you</a></li>
+                    <li class="menu__item menu__item"><a href="contact.html" class="menu__link">Register</a></li>
+                    <li class="menu__item menu__item"><a href="services.html" class="menu__link">Services</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section class="section_nav">
+        <h2 class="section__title">Section navigator</h2>
+        <ul class="section__list" aling="left">
+            <li class="section__list section__item"><a href="#about" class="section__link">About me</a></li>
+            <li class="section__list section__item"><a href="#gallery" class="section__link">Gallery</a></li>
+            <li class="section__list section__item"><a href="#video" class="section__link">Video</a></li>
+        </ul>  
+    </section>
+    <section id="about" class="section_about">
+        <h2 class="section__title">About me</h2>
+        <p class="about__content">Hola! soy Javier, un intento de <strong>desarrollador</strong> y aprendíz de <em>persona</em>.<br><u>Este texto</u> es menos 
+            importante por eso utilizo este tipo de <b>negrita</b> y <i>cursiva</i>,<br> lo que no importa lo <s>tachamos</s> y
+            lo importante lo <del>eliminamos</del>. Podemos tambien jugar con numeros<br> y poner superíndices: 2<sup>3</sup>, o subíndices como 2<sub>3</sub>.
+        tenemos la opción de seguir consejos de internet, como este de <strong>Paulo Coelho</strong>:<br><blockquote><b>"Hay dos palabras que le abrirán muchas puertas: Tire y Empuje"</b></blockquote></p>
+
+        <p class="about__content">Podemos mostrar como quedaría <mark>la misma cita en codigo</mark>:<br><code>console.log("Hay dos palabras que le abrirán muchas puertas: Tire y Empuje")</code></p>
+    </section>
+    <section id="gallery" class="section_gallery">
+        <h2 class="section__title">Gallery</h2>
+        <img src="images/bichon1.jpg" alt="Good old-fashioned little dog" width="600" height="800" class="gallery__content">
+    </section>
+    <section id="video" class="section_video">
+        <h2 class="section__title">Video</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/DJ_wEoW8Qcg?si=yzDWyoqOTdSNhQfp" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="video__content"></iframe>
+    </section>
+    <footer class="footer">
+        <p class="footer__rights">&copy; 2024 Práctica 1 HTML. All rights reserved.</p>
+        <ul class="footer__list">
+            <li class="footer__item"><a href="private.html" class="footer__link">Privacy policy</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

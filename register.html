@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 1</title>
+</head>
+<body>
+    <header align="center">
+        <h1 class="web__title">Práctica 1 HTML</h1>
+        <div class="menu_section">
+            <nav>
+                <ul class="menu__list" align="left">
+                    <li class="menu__item"><a href="index.html" class="menu__link">Home</a></li>
+                    <li class="menu__item"><a href="about.html" class="menu__link">About you</a></li>
+                    <li class="menu__item menu__item--active"><a href="contact.html" class="menu__link">Register</a></li>
+                    <li class="menu__item"><a href="services.html" class="menu__link">Services</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="form_section"> 
+        <form class="form" method="post">
+            <fieldset>
+                <legend><h3 class="form__title">Registration form</h3></legend>
+                <div class="form__field">
+                    <label for="name" class="form__label">Name:</label>
+                    <input type="text" id="name" name="name" class="form__input" required>
+                </div>
+                <div class="form__field">
+                    <label for="last_name" class="form__label">Last name:</label>
+                    <input type="text" id="last_name" name="last_name" class="form__input" required>
+                </div>
+                <div class="form__field">
+                    <label for="password" class="form__label">Password:</label>
+                    <input type="password" id="password" name="password" class="form__input" required>
+                </div>
+                <div class="form__field">
+                    <label for="phone" class="form__label">Phone Number:</label>
+                    <input type="tel" id="phone" pattern="[0-9]{9}" name="phone" class="form__input" required>
+                </div>
+                <div class="form__field">
+                    <label for="email" class="form__label">Email:</label>
+                    <input type="email" id="email" name="email" class="form__input" required>
+                </div>
+                <div class="form__field">
+                    <span class="form__label">Gender:</span>
+                    <label class="form__radio">
+                        <input type="radio" name="gender" value="male" class="form__radio--input" required checked>
+                        Male
+                    </label>
+                    <label class="form__radio">
+                        <input type="radio" name="gender" value="female" class="form__radio--input" required>
+                        Female
+                    </label>
+                    <label class="form__radio">
+                        <input type="radio" name="gender" value="other" class="form__radio--input" required>
+                        Other
+                    </label>
+                </div>
+                <div class="form__field">
+                    <label for="birthday" class="form__date">Select your birthday:</label>
+                    <input type="date" id="birthday" name="birthday" class="form__input--date">
+                </div>
+                <div class="form__field">
+                    <label for="how_meet_us" class="form__label">How did you meet us:</label>
+                    <select id="contactMethod" name="how_meet_us" class="form__input" required>
+                        <option value="" disabled selected>Please select</option>
+                        <option value="google">Google</option>
+                        <option value="friend">Friend</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form__field">
+                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
+                    <label for="privacy_policy">I have read and accept the <a href="/private.html" target="_blank">Privacy Policy</a>.</label>
+                </div>
+                <div class="form__field">
+                    <input type="checkbox" id="newsletter" name="newsletter" class="form__input">
+                    <label for="newsletter" class="form__label">Subscribe to our newsletter.</label>
+                </div>
+                <div class="form__field form__field--submit">
+                    <button type="submit" class="form__button">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <footer class="footer">
+        <p class="footer__rights">&copy; 2024 Práctica 1 HTML. All rights reserved.</p>
+        <ul class="footer__list">
+            <li class="footer__item"><a href="private.html" class="footer__link">Privacy policy</a></li>
+        </ul>
+    </footer> 
+</body>
+</html>
