@@ -7,14 +7,14 @@
 </head>
 <body>
     <header align="center">
-        <h1 class="web__title">Práctica 1 HTML</h1>
+        <h1 class="header__title">Registro</h1>
         <div class="menu_section">
-            <nav>
+            <nav class="menu__nav">
                 <ul class="menu__list" align="left">
                     <li class="menu__item"><a href="index.html" class="menu__link">Home</a></li>
-                    <li class="menu__item"><a href="about.html" class="menu__link">About you</a></li>
-                    <li class="menu__item menu__item--active"><a href="contact.html" class="menu__link">Register</a></li>
-                    <li class="menu__item"><a href="services.html" class="menu__link">Services</a></li>
+                    <li class="menu__item"><a href="about.html" class="menu__link">Sobre ti</a></li>
+                    <li class="menu__item menu__item--active"><a href="contact.html" class="menu__link">Registro</a></li>
+                    <li class="menu__item"><a href="blog.html" class="menu__link">Blog</a></li>
                 </ul>
             </nav>
         </div>
@@ -22,74 +22,74 @@
     <div class="form_section"> 
         <form class="form" method="post">
             <fieldset>
-                <legend><h3 class="form__title">Registration form</h3></legend>
+                <legend><h2 class="form__title">Formulario de registro</h2></legend>
                 <div class="form__field">
-                    <label for="name" class="form__label">Name:</label>
+                    <label for="name" class="form__label">Nombre:</label>
                     <input type="text" id="name" name="name" class="form__input" required>
                 </div>
                 <div class="form__field">
-                    <label for="last_name" class="form__label">Last name:</label>
+                    <label for="last_name" class="form__label">Apellidos:</label>
                     <input type="text" id="last_name" name="last_name" class="form__input" required>
                 </div>
                 <div class="form__field">
-                    <label for="password" class="form__label">Password:</label>
+                    <label for="password" class="form__label">Contraseña:</label>
                     <input type="password" id="password" name="password" class="form__input" required>
                 </div>
                 <div class="form__field">
-                    <label for="phone" class="form__label">Phone Number:</label>
+                    <label for="phone" class="form__label">Teléfono:</label>
                     <input type="tel" id="phone" pattern="[0-9]{9}" name="phone" class="form__input" required>
                 </div>
                 <div class="form__field">
-                    <label for="email" class="form__label">Email:</label>
+                    <label for="email" class="form__label">Correo electrónico:</label>
                     <input type="email" id="email" name="email" class="form__input" required>
                 </div>
                 <div class="form__field">
-                    <span class="form__label">Gender:</span>
+                    <span class="form__label">Género:</span>
                     <label class="form__radio">
                         <input type="radio" name="gender" value="male" class="form__radio--input" required checked>
-                        Male
+                        Masculino
                     </label>
                     <label class="form__radio">
                         <input type="radio" name="gender" value="female" class="form__radio--input" required>
-                        Female
+                        Femenino
                     </label>
                     <label class="form__radio">
                         <input type="radio" name="gender" value="other" class="form__radio--input" required>
-                        Other
+                        Otro
                     </label>
                 </div>
                 <div class="form__field">
-                    <label for="birthday" class="form__date">Select your birthday:</label>
+                    <label for="birthday" class="form__date">Fecha de nacimiento:</label>
                     <input type="date" id="birthday" name="birthday" class="form__input--date">
                 </div>
                 <div class="form__field">
-                    <label for="how_meet_us" class="form__label">How did you meet us:</label>
+                    <label for="how_meet_us" class="form__label">Como nos has conocido:</label>
                     <select id="contactMethod" name="how_meet_us" class="form__input" required>
-                        <option value="" disabled selected>Please select</option>
+                        <option value="" disabled selected>Elige una opción</option>
                         <option value="google">Google</option>
-                        <option value="friend">Friend</option>
-                        <option value="other">Other</option>
+                        <option value="friend">Amigo</option>
+                        <option value="other">Otro</option>
                     </select>
                 </div>
                 <div class="form__field">
                     <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
-                    <label for="privacy_policy">I have read and accept the <a href="/private.html" target="_blank">Privacy Policy</a>.</label>
+                    <label for="privacy_policy">He leído y acepto la <a href="/private.html" target="_blank">política de privacidad</a>.</label>
                 </div>
                 <div class="form__field">
                     <input type="checkbox" id="newsletter" name="newsletter" class="form__input">
-                    <label for="newsletter" class="form__label">Subscribe to our newsletter.</label>
+                    <label for="newsletter" class="form__label">Suscríbete a nuestro mailing informativo.</label>
                 </div>
                 <div class="form__field form__field--submit">
-                    <button type="submit" class="form__button">Submit</button>
+                    <button type="submit" class="form__button">Enviar</button>
                 </div>
             </fieldset>
         </form>
     </div>
     <footer class="footer">
-        <p class="footer__rights">&copy; 2024 Práctica 1 HTML. All rights reserved.</p>
+        <p class="footer__rights">&copy; 2024 Práctica 1 HTML. Todos los derechos reservados.</p>
         <ul class="footer__list">
-            <li class="footer__item"><a href="private.html" class="footer__link">Privacy policy</a></li>
+            <li class="footer__item"><a href="private.html" class="footer__link">Política de privacidad</a></li>
         </ul>
-    </footer> 
+    </footer>
 </body>
 </html>
