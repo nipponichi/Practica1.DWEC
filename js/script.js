@@ -38,11 +38,12 @@ window.onload = function () {
 
     const tableBody = document.querySelector(".table__body");
 
-    // Adds user row to table
+    // Adds user row to table at start
     function addRow(user) {
         const row = document.createElement("tr");
+        
+        // To maintain the html consistency
         row.classList.add("table__row", "table__row--body");
-
         row.innerHTML = `
             <td class="table__body--cell">${user.name}</td>
             <td class="table__body--cell">${user.lastName}</td>
@@ -64,23 +65,28 @@ window.onload = function () {
         addRow(user);
     });
 
-    const filterInput = document.getElementById("filterTable");
-    
-    // filter by input events
-    function filterTable() {
-        const filterText = filterInput.value.toLowerCase();
-        const rows = document.querySelectorAll(".table__body .table__row--body");
-
-        rows.forEach(function (row) {
-            if (row.textContent.toLowerCase().includes(filterText) || filterText.length < 3) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-
+    const filterInput = document.querySelector(".table__section--filter");
     filterInput.addEventListener("input", filterTable);
+
+        // filter by input events
+        function filterTable() {
+            const filterText = filterInput.value.toLowerCase();
+    
+            tableBody.innerHTML = "";
+    
+            const filteredUsers = users.filter(user => {
+                return (
+                    user.name.toLowerCase().includes(filterText) ||
+                    user.lastName.toLowerCase().includes(filterText) ||
+                    filterText.length < 3
+                );
+            });
+
+            filteredUsers.forEach(user => {
+                addRow(user);
+            });
+        }
+
 };
 
 // Gets closest tr element and remove it
