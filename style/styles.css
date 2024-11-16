@@ -1,0 +1,4 @@
+.menu__item--active {
+    background-color: #007bff;
+    color: #ffffff;
+}
