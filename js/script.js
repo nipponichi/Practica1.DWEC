@@ -41,7 +41,7 @@ window.onload = function () {
     // Adds user row to table at start
     function addRow(user) {
         const row = document.createElement("tr");
-        
+
         // To maintain the html consistency
         row.classList.add("table__row", "table__row--body");
         row.innerHTML = `
@@ -68,24 +68,24 @@ window.onload = function () {
     const filterInput = document.querySelector(".table__section--filter");
     filterInput.addEventListener("input", filterTable);
 
-        // filter by input events
-        function filterTable() {
-            const filterText = filterInput.value.toLowerCase();
-    
-            tableBody.innerHTML = "";
-    
-            const filteredUsers = users.filter(user => {
-                return (
-                    user.name.toLowerCase().includes(filterText) ||
-                    user.lastName.toLowerCase().includes(filterText) ||
-                    filterText.length < 3
-                );
-            });
+    // filter by input events
+    function filterTable() {
+        const filterText = filterInput.value.toLowerCase();
 
-            filteredUsers.forEach(user => {
-                addRow(user);
-            });
-        }
+        tableBody.innerHTML = "";
+
+        const filteredUsers = users.filter(user => {
+            return (
+                user.name.toLowerCase().includes(filterText) ||
+                user.lastName.toLowerCase().includes(filterText) ||
+                filterText.length < 3
+            );
+        });
+
+        filteredUsers.forEach(user => {
+            addRow(user);
+        });
+    }
 
 };
 
