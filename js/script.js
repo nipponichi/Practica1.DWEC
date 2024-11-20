@@ -38,6 +38,7 @@ const users = [
 ];
 
 
+let user_id;
 
 window.onload = function () {
 
@@ -73,16 +74,14 @@ window.onload = function () {
 
 };
 
-// Gets closest tr element and remove it
-function deleteRow(button) {
+function deleteUser(button) {
     const row = button.closest("tr");
     row.remove();
 }
 
-// Update users values on the row
-function updateUser(userId) {
-
-    const user = users.find(user => user.id === userId);
+function showUser(userId) {
+    user_id = userId;
+    const user = users.find(user => user.id === user_id);
 
     document.getElementById("name").value = user.name;
     document.getElementById("lastName").value = user.lastName;
@@ -95,17 +94,25 @@ function updateUser(userId) {
     document.getElementById("newsletter").checked = user.newsletter;
     document.getElementById("userForm").style.display = "block";
 
-    window.userId = userId;
 }
-
 
 function saveUser(event) {
     event.preventDefault();
 
-    const userId = window.userId;
+    // Swaps user on array
+    const userIndex = users.findIndex(user => user.id === user_id);
+    users[userIndex] = getUserFormData();
+    console.log(users[userIndex]);
+    modifyUserRow(users[userIndex])
 
-    const updatedUser = {
-        id: userId,
+    document.getElementById("userForm").style.display = "none";
+
+    user_id = null;
+}
+
+function getUserFormData() {
+    return {
+        id: user_id,
         name: document.getElementById("name").value,
         lastName: document.getElementById("lastName").value,
         phone: document.getElementById("phone").value,
@@ -116,31 +123,33 @@ function saveUser(event) {
         privatePolicy: document.getElementById("privatePolicy").checked,
         newsletter: document.getElementById("newsletter").checked
     };
-
-    // Swaps user on array
-    const userIndex = users.findIndex(user => user.id === userId);
-    users[userIndex] = updatedUser;
-    
-
-    // Update user row
-    const row = document.querySelector(`.table__row--body[data-user-id="${userId}"]`);
-    console.log(row)
-    row.children[0].textContent = updatedUser.name;
-    row.children[1].textContent = updatedUser.lastName;
-    row.children[2].textContent = updatedUser.phone;
-    row.children[3].textContent = updatedUser.email;
-    row.children[4].textContent = updatedUser.genre;
-    row.children[5].textContent = updatedUser.birthDate;
-    row.children[6].textContent = updatedUser.howMeetUs;
-    row.children[7].textContent = updatedUser.privatePolicy ? "Sí" : "No";
-    row.children[8].textContent = updatedUser.newsletter ? "Sí" : "No";
-    
-    document.getElementById("userForm").style.display = "none";
-
-    window.userId = null;
 }
 
-// Add row to table
+function modifyUserRow(modifiedUser) {
+    const row = document.querySelector(`.table__row--body[data-user-id="${user_id}"]`);
+    const newValues = [
+        modifiedUser.name,
+        modifiedUser.lastName,
+        modifiedUser.phone,
+        modifiedUser.email,
+        modifiedUser.genre,
+        modifiedUser.birthDate,
+        modifiedUser.howMeetUs,
+        modifiedUser.privatePolicy ? "Sí" : "No",
+        modifiedUser.newsletter ? "Sí" : "No"
+    ];
+
+    // Update user cell
+    row.querySelectorAll('.table__body--cell').forEach((cell, index) => {
+        cell.textContent = newValues[index];
+    });
+
+    // Adds row buttons on last cell
+    row.lastElementChild.innerHTML =
+        `<input type="button" value="Delete" onclick="deleteUser(this)">
+        <input type="button" value="Modify" onclick="showUser(${modifiedUser.id})">`;
+}
+
 function addRow(user) {
     const row = document.createElement("tr");
     row.classList.add("table__row", "table__row--body");
@@ -158,8 +167,8 @@ function addRow(user) {
         <td class="table__body--cell">${user.privatePolicy ? "Sí" : "No"}</td>
         <td class="table__body--cell">${user.newsletter ? "Sí" : "No"}</td>
         <td class="table__body--cell">
-            <input type="button" value="Delete" onclick="deleteRow(this)">
-            <input type="button" value="Modify" onclick="updateUser(${user.id})">
+            <input type="button" value="Delete" onclick="deleteUser(this)">
+            <input type="button" value="Modify" onclick="showUser(${user.id})">
         </td>
     `;
 

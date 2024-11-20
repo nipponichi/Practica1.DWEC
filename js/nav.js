@@ -27,7 +27,7 @@ function setActiveLink() {
     });
 
     menuLinks.forEach(link => {
-        console.log(link);
+
         // finds nav url match and set as active 
         if (currentUrl.endsWith(link.getAttribute('href'))) {
             link.classList.add('menu__item--active');
