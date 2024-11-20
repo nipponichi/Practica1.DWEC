@@ -124,6 +124,7 @@ function saveUser(event) {
 
     // Update user row
     const row = document.querySelector(`.table__row--body[data-user-id="${userId}"]`);
+    console.log(row)
     row.children[0].textContent = updatedUser.name;
     row.children[1].textContent = updatedUser.lastName;
     row.children[2].textContent = updatedUser.phone;
