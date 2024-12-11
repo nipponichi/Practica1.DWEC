@@ -1,93 +1,123 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="js/script.js"></script>
     <script src="js/nav.js"></script>
-    <link rel="stylesheet" href="style/styles.css">
-    <title>Práctica 1</title>
-</head>
-
-<body>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script srt="js/sweetAlert.js"></script>
+    <script src="js/sweetAlert.js"></script>
+    <link rel="stylesheet" href="style/styles.css" />
+    <title>Práctica 1</title>
+  </head>
+
+  <body>
     <header align="center">
-        <h1 class="header__title">Sobre ti</h1>
-        <div class="menu_section">
-            <div id="nav__component"></div>
-        </div>
+      <h1 class="header__title">Sobre ti</h1>
+      <div class="menu_section">
+        <div id="nav__component"></div>
+      </div>
     </header>
-    <form id="userForm" style="display: none;" onsubmit="saveUser(event)">
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" name="name" required>
-    
-        <label for="lastName">Apellidos:</label>
-        <input type="text" id="lastName" name="lastName" required>
-    
-        <label for="phone">Teléfono:</label>
-        <input type="tel" id="phone" name="phone" required>
-    
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" name="email" required>
-    
-        <label for="genre">Género:</label>
-        <select id="genre" name="genre" required>
-            <option value="F">Femenino</option>
-            <option value="M">Masculino</option>
-            <option value="O">Otro</option>
-        </select>
-    
-        <label for="birthDate">Fecha de Nacimiento:</label>
-        <input type="date" id="birthDate" name="birthDate" required>
-    
-        <label for="howMeetUs">¿Cómo nos conoció?</label>
-        <input type="text" id="howMeetUs" name="howMeetUs" required>
-    
-        <label for="privatePolicy">Política de privacidad:</label>
-        <input type="checkbox" id="privatePolicy" name="privatePolicy">
-    
-        <label for="newsletter">Publicidad:</label>
-        <input type="checkbox" id="newsletter" name="newsletter">
-        <button type="button" id="cancelButton">Cancelar</button>
-        <button type="submit">Guardar</button>
+    <form id="userForm" style="display: none" onsubmit="saveUser(event)">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="lastName">Apellidos:</label>
+      <input type="text" id="lastName" name="lastName" required />
+
+      <label for="phone">Teléfono:</label>
+      <input type="tel" id="phone" name="phone" required />
+
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required />
+
+      <div class="form__field">
+        <span class="form__label">Género:</span>
+        <label class="form__radio">
+          <input
+            type="radio"
+            name="genre"
+            value="M"
+            class="form__radio--input"
+            required
+            checked
+          />
+          Masculino
+        </label>
+        <label class="form__radio">
+          <input
+            type="radio"
+            name="genre"
+            value="F"
+            class="form__radio--input"
+            required
+          />
+          Femenino
+        </label>
+        <label class="form__radio">
+          <input
+            type="radio"
+            name="genre"
+            value="O"
+            class="form__radio--input"
+            required
+          />
+          Otro
+        </label>
+      </div>
+
+      <label for="birthDate">Fecha de Nacimiento:</label>
+      <input type="date" id="birthDate" name="birthDate" required />
+
+      <label for="howMeetUs">¿Cómo nos conoció?</label>
+      <input type="text" id="howMeetUs" name="howMeetUs" required />
+
+      <label for="privatePolicy">Política de privacidad:</label>
+      <input
+        type="checkbox"
+        id="privatePolicy"
+        name="privatePolicy"
+        value="true"
+      />
+
+      <label for="newsletter">Publicidad:</label>
+      <input type="checkbox" id="newsletter" name="newsletter" value="true" />
+      <button type="button" id="cancelButton">Cancelar</button>
+      <button type="submit" id="saveButton">Guardar</button>
     </form>
-    
-    
+
     <div class="table_section">
-        <table border="1" class="table">
-            <input class="table__section--filter" type="text" id="inputFilter">
-            <caption class="table__caption">
-                <h3>Tabla de usuarios registrados</h3>
-            </caption>
-            <button type="button" id="createButton">Crear</button>
-            <thead class="table__header">
-                <tr class="table__row table__row--header">
-                    <th class="table__header--cell">Nombre</th>
-                    <th class="table__header--cell">Apellidos</th>
-                    <th class="table__header--cell">Teléfono</th>
-                    <th class="table__header--cell">Correo electrónico</th>
-                    <th class="table__header--cell">Género</th>
-                    <th class="table__header--cell">F. Nacimiento</th>
-                    <th class="table__header--cell">Como nos conoció</th>
-                    <th class="table__header--cell">Política de privacidad</th>
-                    <th class="table__header--cell">Publicidad</th>
-                    <th class="table__header--cell">Acciones</th>
-                </tr>
-            </thead>
-            <tbody class="table__body" id="tableBody">
-            </tbody>
-        </table>
+      <table border="1" class="table">
+        <input class="table__section--filter" type="text" id="inputFilter" />
+        <caption class="table__caption">
+          <h3>Tabla de usuarios registrados</h3>
+        </caption>
+        <thead class="table__header">
+          <tr class="table__row table__row--header">
+            <th class="table__header--cell">Nombre</th>
+            <th class="table__header--cell">Apellidos</th>
+            <th class="table__header--cell">Teléfono</th>
+            <th class="table__header--cell">Correo electrónico</th>
+            <th class="table__header--cell">Género</th>
+            <th class="table__header--cell">F. Nacimiento</th>
+            <th class="table__header--cell">Como nos conoció</th>
+            <th class="table__header--cell">Política de privacidad</th>
+            <th class="table__header--cell">Publicidad</th>
+            <th class="table__header--cell">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table__body" id="tableBody"></tbody>
+      </table>
     </div>
     <footer class="footer">
-        <p class="footer__rights">&copy; 2024 Práctica 1 HTML. Todos los derechos reservados.</p>
-        <ul class="footer__list">
-            <li class="footer__item"><a href="private.html" class="footer__link">Política de privacidad</a></li>
-        </ul>
+      <p class="footer__rights">
+        &copy; 2024 Práctica 1 HTML. Todos los derechos reservados.
+      </p>
+      <ul class="footer__list">
+        <li class="footer__item">
+          <a href="private.html" class="footer__link">Política de privacidad</a>
+        </li>
+      </ul>
     </footer>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="js/sweetAlert.js"></script>
-</body>
-
+  </body>
 </html>

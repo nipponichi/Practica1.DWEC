@@ -1,10 +1,12 @@
 const AlertManager = {
-    showSuccess(message = 'Operación completada exitosamente.') {
+    showSuccess(message = 'Operación completada correctamente', time = 1000) {
         Swal.fire({
-            title: 'Éxito',
+            title: 'Toma!',
             text: message,
             icon: 'success',
-            confirmButtonText: 'OK',
+            timer: time,
+            timerProgressBar: true,
+            showConfirmButton: false,
         });
     },
 
@@ -17,20 +19,36 @@ const AlertManager = {
         });
     },
 
-    showWarning(message = '¿Estás seguro de continuar?', confirmCallback) {
+    showCancel(message = 'Acción cancelada') {
+        Swal.fire({
+            title: 'Cancelado',
+            text: message,
+            icon: 'info',
+            confirmButtonText: 'OK',
+        });
+    },
+
+    showWarning(message = '¿Estás seguro de continuar?', confirmCallback, cancelCallback) {
         Swal.fire({
             title: 'Advertencia',
-            text: message,
+            text: message || '¿Estás seguro de continuar?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Sí',
             cancelButtonText: 'No',
         }).then((result) => {
-            if (result.isConfirmed && typeof confirmCallback === 'function') {
-                confirmCallback();
+            if (result.isConfirmed) {
+                if (typeof confirmCallback === 'function') {
+                    confirmCallback();
+                }
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                if (typeof cancelCallback === 'function') {
+                    cancelCallback();
+                }
             }
         });
     },
+    
 
     showInfo(message = 'Información importante.') {
         Swal.fire({
@@ -38,6 +56,17 @@ const AlertManager = {
             text: message,
             icon: 'info',
             confirmButtonText: 'Entendido',
+        });
+    },
+
+    showTimedAlert(message = 'Esto desaparecerá en 3 segundos.', time = 1000, isSuccess) {
+        Swal.fire({
+            title: 'Aviso',
+            html: message,
+            icon: isSuccess ? 'success' : 'error',
+            timer: time,
+            timerProgressBar: true,
+            showConfirmButton: false,
         });
     },
 };

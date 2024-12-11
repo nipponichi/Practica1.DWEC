@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/script.js"></script>
     <script src="js/nav.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="js/sweetAlert.js"></script>
     <link rel="stylesheet" href="/style/styles.css">
     <title>Práctica 1</title>
 </head>
@@ -26,7 +29,7 @@
                 </div>
                 <div class="form__field">
                     <label for="last_name" class="form__label">Apellidos:</label>
-                    <input type="text" id="last_name" name="last_name" class="form__input" required>
+                    <input type="text" id="lastName" name="lastName" class="form__input" required>
                 </div>
                 <div class="form__field">
                     <label for="password" class="form__label">Contraseña:</label>
@@ -43,41 +46,43 @@
                 <div class="form__field">
                     <span class="form__label">Género:</span>
                     <label class="form__radio">
-                        <input type="radio" name="gender" value="male" class="form__radio--input" required checked>
+                        <input type="radio" name="genre" value="M" class="form__radio--input" required checked>
                         Masculino
                     </label>
                     <label class="form__radio">
-                        <input type="radio" name="gender" value="female" class="form__radio--input" required>
+                        <input type="radio" name="genre" value="F" class="form__radio--input" required>
                         Femenino
                     </label>
                     <label class="form__radio">
-                        <input type="radio" name="gender" value="other" class="form__radio--input" required>
+                        <input type="radio" name="genre" value="O" class="form__radio--input" required>
                         Otro
                     </label>
                 </div>
                 <div class="form__field">
                     <label for="birthday" class="form__date">Fecha de nacimiento:</label>
-                    <input type="date" id="birthday" name="birthday" class="form__input--date">
+                    <input type="date" id="birthDate" name="birthday" class="form__input--date">
                 </div>
                 <div class="form__field">
                     <label for="how_meet_us" class="form__label">Como nos has conocido:</label>
-                    <select id="contactMethod" name="how_meet_us" class="form__input" required>
+                    <select id="howMeetUs" name="howMeetUs" class="form__input" required>
                         <option value="" disabled selected>Elige una opción</option>
                         <option value="google">Google</option>
                         <option value="friend">Amigo</option>
                         <option value="other">Otro</option>
                     </select>
                 </div>
+
+                <label for="privatePolicy">Política de privacidad:</label>
                 <div class="form__field">
-                    <input type="checkbox" id="privacy_policy" name="privacy_policy" required>
+                    <input type="checkbox" id="privatePolicy" name="privatePolicy" value="true">
                     <label for="privacy_policy">He leído y acepto la <a href="/private.html" target="_blank">política de privacidad</a>.</label>
                 </div>
                 <div class="form__field">
-                    <input type="checkbox" id="newsletter" name="newsletter" class="form__input">
+                    <input type="checkbox" id="newsletter" name="newsletter" value="true">
                     <label for="newsletter" class="form__label">Suscríbete a nuestro mailing informativo.</label>
                 </div>
                 <div class="form__field form__field--submit">
-                    <button type="submit" class="form__button">Enviar</button>
+                    <button type="submit" id="createButton" class="form__button">Enviar</button>
                 </div>
             </fieldset>
         </form>

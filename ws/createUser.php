@@ -6,7 +6,7 @@ require_once '../ws/models/User.php';
 require_once '../ws/controllers/UserActions.php';
 
 use models\User;
-
+print_r($_POST['privacy_policy']);
 // html form values
 $id = (int) ($_POST['id'] ?? '0');
 $name = (string) ($_POST['name'] ?? 'noname');
