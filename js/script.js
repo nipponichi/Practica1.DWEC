@@ -5,7 +5,6 @@ window.onload = async function () {
   const tableBody = document.getElementById("tableBody");
   const buttonCancel = document.getElementById("cancelButton");
   const buttonCreate = document.getElementById("createButton");
-  const buttonCreate2 = document.getElementById("createButton2");
 
   const filterInput = document.getElementById("inputFilter");
 
@@ -15,29 +14,22 @@ window.onload = async function () {
 
   // filter by input events
   if (tableBody) {
-    function filterTable() {
-      const filterText = filterInput.value.toLowerCase();
 
-      tableBody.innerHTML = "";
-
-      const filteredUsers = users.filter((user) => {
-        return (
-          user.name.toLowerCase().includes(filterText) ||
-          user.lastName.toLowerCase().includes(filterText) ||
-          filterText.length < 3
-        );
-      });
-
-      filteredUsers.forEach((user) => {
-        addRow(user);
-      });
-    }
+    await fetchList();
+    showUsers();
+    tableBody.addEventListener("click", (event) => {
+      if (event.target.value === "Delete") {
+        const row = event.target.closest("tr");
+        const userId = row.dataset.userId;
+        tryDeleteUser(userId, row);
+      }
+    });
   }
 
   if (buttonCreate) {
-    buttonCreate.addEventListener("click", function () {
+    buttonCreate.addEventListener("click", function (e) {
       console.log("button3");
-      saveUser(event);
+      saveUser(e);
     });
   }
 
@@ -48,24 +40,35 @@ window.onload = async function () {
       hideForm();
     });
   }
-
-  if (tableBody) {
-    await fetchList();
-    showUsers();
-  }
 };
 
-async function tryDeleteUser(userId, button) {
+function filterTable() {
+  const filterInput = document.getElementById("inputFilter");
+  const tableBody = document.getElementById("tableBody");
+  const filterText = filterInput.value.toLowerCase();
+
+  tableBody.innerHTML = "";
+
+  const filteredUsers = users.filter((user) => {
+    return (
+      user.name.toLowerCase().includes(filterText) ||
+      user.lastName.toLowerCase().includes(filterText) ||
+      filterText.length < 3
+    );
+  });
+
+  filteredUsers.forEach((user) => {
+    addRow(user);
+  });
+}
+
+async function tryDeleteUser(userId, row) {
   AlertManager.showWarning(
     "¿Eliminar este usuario?",
     async () => {
       try {
         await deleteUser(userId);
-
-        // const row = button.closest("tr");
-        // if (row) {
-        //   row.remove();
-        // }
+        row.remove();
       } catch (error) {
         console.error("Error al eliminar el usuario:", error);
         AlertManager.showError(
@@ -99,16 +102,24 @@ function cleanForm() {
   document.getElementById("lastName").value = "";
   document.getElementById("phone").value = "";
   document.getElementById("email").value = "";
-  document.getElementById("genre").value = "";
-  document.getElementById("birthDate").value = "";
+  
+  const password = document.getElementById("password");
+  if (password) {
+    password.value = "";
+  }
+
+  const genreRadios = document.querySelectorAll('input[name="genre"]');
+  genreRadios.forEach((radio) => {
+    radio.checked = false;
+  }),
+    (document.getElementById("birthDate").value = "");
   document.getElementById("howMeetUs").value = "";
   document.getElementById("privatePolicy").checked = "";
   document.getElementById("newsletter").checked = "";
 }
 
-async function saveUser(event) {
-  event.preventDefault();
-  console.log("saveuser");
+async function saveUser(e) {
+  e.preventDefault();
   if (!user_id) {
     await createUser();
   } else {
@@ -116,11 +127,10 @@ async function saveUser(event) {
       "El usuario será modificado",
       async () => {
         try {
-          const userIndex = users.findIndex((user) => user.id === user_id);
           userData = getUserFormData(user_id);
           console.log(userData);
-          modifyUserRow(userData);
           await updateUser(userData);
+          modifyUserRow(userData);
           document.getElementById("userForm").style.display = "none";
           user_id = null;
         } catch (error) {
@@ -150,25 +160,28 @@ function getUserFormData(userId) {
     sexo: document.querySelector('input[name="genre"]:checked').value,
     fecha_nacimiento: document.getElementById("birthDate").value,
     how_meet_us: document.getElementById("howMeetUs").value,
-    privacy_policy: document.getElementById("privatePolicy").checked ? 1 : 0,
-    newsletter: document.getElementById("newsletter").checked ? 1 : 0,
+    privacy_policy: document.getElementById("privatePolicy").checked
+      ? true
+      : false,
+    newsletter: document.getElementById("newsletter").checked ? true : false,
   };
 }
 
 function modifyUserRow(modifiedUser) {
+  console.log(modifiedUser);
   const row = document.querySelector(
     `.table__row--body[data-user-id="${user_id}"]`
   );
   const newValues = [
-    modifiedUser.name,
-    modifiedUser.lastName,
-    modifiedUser.phone,
+    modifiedUser.nombre,
+    modifiedUser.apellidos,
+    modifiedUser.telefono,
     modifiedUser.email,
-    modifiedUser.genre,
-    modifiedUser.birthDate,
-    modifiedUser.howMeetUs,
-    modifiedUser.privatePolicy ? "Sí" : "No",
-    modifiedUser.newsletter ? "Sí" : "No",
+    modifiedUser.sexo = getUserGender(modifiedUser.sexo),
+    modifiedUser.fecha_nacimiento,
+    modifiedUser.how_meet_us,
+    modifiedUser.private_policy === 1 ? "Sí" : "No",
+    modifiedUser.newsletter === true ? "Sí" : "No",
   ];
 
   // Update user cell
@@ -177,7 +190,7 @@ function modifyUserRow(modifiedUser) {
   });
 
   // Adds row buttons on last cell
-  row.lastElementChild.innerHTML = `<input type="button" value="Delete" onclick="tryDeleteUser(${modifiedUser.id})">
+  row.lastElementChild.innerHTML = `<input type="button" value="Delete">
         <input type="button" value="Modify" onclick="showUser(${modifiedUser.id})">`;
 }
 
@@ -205,9 +218,7 @@ function addRow(user) {
         <td class="table__body--cell">${user.privacy_policy ? "Sí" : "No"}</td>
         <td class="table__body--cell">${user.newsletter ? "Sí" : "No"}</td>
         <td class="table__body--cell">
-            <input type="button" value="Delete" onclick="tryDeleteUser(${
-              user.id
-            })">
+            <input type="button" value="Delete">
             <input type="button" value="Modify" onclick="showUser(${user.id})">
         </td>
     `;
@@ -249,15 +260,9 @@ async function deleteUser(userId) {
 async function createUser() {
   let finalMessage = null;
   const newUser = getUserFormData();
-  console.log(newUser);
 
-  // FormData object
-  const formData = new FormData();
-  Object.keys(newUser).forEach((key) => {
-    formData.append(key, newUser[key]);
-  });
+  const formData = this.makeFormData(newUser);
 
-  console.log(formData);
   try {
     const response = await fetch("ws/createUser2.php", {
       method: "POST",
@@ -276,11 +281,13 @@ async function createUser() {
       2000,
       result.success
     );
+    cleanForm();
   } catch (error) {
     AlertManager.showError(error.message);
   }
 }
 
+// Format answer for forms mistakes
 function manageErrorResponse(result) {
   finalMessage = result.message + ":<br>";
   result.data.forEach((data) => {
@@ -298,9 +305,13 @@ async function showUser(userId) {
   document.getElementById("lastName").value = result.data.apellidos;
   document.getElementById("phone").value = result.data.telefono;
   document.getElementById("email").value = result.data.email;
-  document.querySelector('input[name="genre"]:checked').value === "Femenino"
-    ? "F"
-    : "M";
+  const genre = result.data.sexo || "M";
+  const genreRadio = document.querySelector(
+    `input[name="genre"][value="${genre}"]`
+  );
+  if (genreRadio) {
+    genreRadio.checked = true;
+  }
   document.getElementById("birthDate").value = `${result.data.fecha_nacimiento
     .split("/")
     .reverse()
@@ -313,11 +324,7 @@ async function showUser(userId) {
 
 async function updateUser(modifiedUser) {
   console.log(modifiedUser);
-  const formData = new FormData();
-  Object.keys(modifiedUser).forEach((key) => {
-    formData.append(key, modifiedUser[key]);
-  });
-
+  const formData = this.makeFormData(modifiedUser);
   try {
     const response = await fetch(`ws/updateUser.php?id=${modifiedUser.id}`, {
       method: "POST",
@@ -332,4 +339,29 @@ async function updateUser(modifiedUser) {
   } catch (error) {
     AlertManager.showError(error.message);
   }
+}
+
+// FormData object
+function makeFormData(modifiedUser) {
+  const formData = new FormData();
+  Object.keys(modifiedUser).forEach((key) => {
+    formData.append(key, modifiedUser[key]);
+  });
+  return formData;
+}
+
+function getUserGender(value) {
+  let sexo;
+  switch(value) {
+    case 'M':
+      sexo = 'Masculino';
+      break;
+    case 'F':
+      sexo = 'Femenino';
+      break;
+    case 'O':
+      sexo = 'Otro';
+      break;
+  }
+  return sexo;
 }

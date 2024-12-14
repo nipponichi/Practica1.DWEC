@@ -23,8 +23,12 @@ try {
         'email' => $_POST['email'] ?? '',
         'sexo' => $_POST['sexo'] ?? '',
         'how_meet_us' => $_POST['how_meet_us'] ?? '',
-        'privacy_policy' => isset($_POST['privacy_policy']) ? (bool)$_POST['privacy_policy'] : false,
-        'newsletter' => isset($_POST['newsletter']) ? (bool)$_POST['newsletter'] : false,
+        'privacy_policy' => isset($_POST['privacy_policy']) 
+        ? ($_POST['privacy_policy'] === 'true' ? true : ($_POST['privacy_policy'] === 'false' ? false : null)) 
+        : null,
+        'newsletter' => isset($_POST['newsletter']) 
+        ? ($_POST['newsletter'] === 'true' ? true : ($_POST['newsletter'] === 'false' ? false : null)) 
+        : null,
     ];
 
     $errors = $user->validateForm($user_data, true);
