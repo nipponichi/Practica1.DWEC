@@ -1,14 +1,4 @@
 const AlertManager = {
-    showSuccess(message = 'Operación completada correctamente', time = 1000) {
-        Swal.fire({
-            title: 'Toma!',
-            text: message,
-            icon: 'success',
-            timer: time,
-            timerProgressBar: true,
-            showConfirmButton: false,
-        });
-    },
 
     showError(message = 'Ocurrió un error inesperado.') {
         Swal.fire({
@@ -49,16 +39,6 @@ const AlertManager = {
         });
     },
     
-
-    showInfo(message = 'Información importante.') {
-        Swal.fire({
-            title: 'Información',
-            text: message,
-            icon: 'info',
-            confirmButtonText: 'Entendido',
-        });
-    },
-
     showTimedAlert(message = 'Esto desaparecerá en 3 segundos.', time = 1000, isSuccess) {
         Swal.fire({
             title: 'Aviso',

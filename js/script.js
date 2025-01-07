@@ -128,10 +128,9 @@ async function saveUser(e) {
       async () => {
         try {
           userData = getUserFormData(user_id);
-          console.log(userData);
           await updateUser(userData);
-          modifyUserRow(userData);
           document.getElementById("userForm").style.display = "none";
+          modifyUserRow(userData);
           user_id = null;
         } catch (error) {
           console.error(error);
@@ -160,9 +159,7 @@ function getUserFormData(userId) {
     sexo: document.querySelector('input[name="genre"]:checked').value,
     fecha_nacimiento: document.getElementById("birthDate").value,
     how_meet_us: document.getElementById("howMeetUs").value,
-    privacy_policy: document.getElementById("privatePolicy").checked
-      ? true
-      : false,
+    privacy_policy: document.getElementById("privatePolicy").checked ? true : false,
     newsletter: document.getElementById("newsletter").checked ? true : false,
   };
 }
@@ -178,10 +175,10 @@ function modifyUserRow(modifiedUser) {
     modifiedUser.telefono,
     modifiedUser.email,
     modifiedUser.sexo = getUserGender(modifiedUser.sexo),
-    modifiedUser.fecha_nacimiento,
+    modifiedUser.fecha_nacimiento.split("-").reverse().join("/"),
     modifiedUser.how_meet_us,
-    modifiedUser.private_policy === 1 ? "Sí" : "No",
-    modifiedUser.newsletter === true ? "Sí" : "No",
+    modifiedUser.privatePolicy = modifiedUser.privacy_policy ? "Sí" : "No",
+    modifiedUser.newsletter ? "Sí" : "No",
   ];
 
   // Update user cell
@@ -237,7 +234,7 @@ async function fetchList() {
     }
     const result = await response.json();
     users = result.data;
-    AlertManager.showTimedAlert(result.message, 1000, result.success);
+    AlertManager.showTimedAlert(result.message, 2000, result.success);
   } catch (error) {
     AlertManager.showError(error.message);
   }
@@ -289,6 +286,7 @@ async function createUser() {
 
 // Format answer for forms mistakes
 function manageErrorResponse(result) {
+  let finalMessage = null;
   finalMessage = result.message + ":<br>";
   result.data.forEach((data) => {
     finalMessage += "- " + data + "<br>";
@@ -323,7 +321,6 @@ async function showUser(userId) {
 }
 
 async function updateUser(modifiedUser) {
-  console.log(modifiedUser);
   const formData = this.makeFormData(modifiedUser);
   try {
     const response = await fetch(`ws/updateUser.php?id=${modifiedUser.id}`, {
