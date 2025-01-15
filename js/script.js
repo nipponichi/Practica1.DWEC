@@ -15,7 +15,7 @@ window.onload = async function () {
   // filter by input events
   if (tableBody) {
 
-    await fetchList();
+    await fetchUser();
     showUsers();
     tableBody.addEventListener("click", (event) => {
       if (event.target.value === "Delete") {
@@ -237,7 +237,7 @@ function addRow(user) {
   tableBody.appendChild(row);
 }
 
-async function fetchList() {
+async function fetchUser() {
   try {
     const response = await fetch("ws/getUser.php");
     console.log(response);
@@ -259,7 +259,7 @@ async function deleteUser(userId) {
     const response = await fetch(`ws/deleteUser.php?id=${userId}`);
 
     if (!response.ok) {
-      throw new Error("Error eliminando el alumnos: Error " + response.status);
+      throw new Error("Error eliminando el alumno: Error " + response.status);
     }
     const result = await response.json();
     AlertManager.showTimedAlert(result.message, 1000, result.success);
@@ -281,7 +281,7 @@ async function createUser() {
     });
 
     if (!response.ok) {
-      throw new Error("Error creando el alumnos: Error " + response.status);
+      throw new Error("Error creando el alumno: Error " + response.status);
     }
 
     const result = await response.json();
@@ -343,7 +343,7 @@ async function updateUser(modifiedUser) {
     });
 
     if (!response.ok) {
-      throw new Error("Error modificando el alumnos: Error " + response.status);
+      throw new Error("Error modificando el alumno: Error " + response.status);
     }
     const result = await response.json();
     AlertManager.showTimedAlert(result.message, 1000, result.success);
