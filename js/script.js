@@ -121,7 +121,21 @@ function cleanForm() {
 async function saveUser(e) {
   e.preventDefault();
   if (!user_id) {
-    await createUser();
+    AlertManager.showWarning(
+      "El usuario será creado",
+      async () => {
+        try {
+          await createUser();
+          user_id = null;
+        } catch (error) {
+          console.error(error);
+          AlertManager.showError("Error modificando usuario");
+        }
+      },
+      () => {
+        AlertManager.showCancel("Cancelada la cre965888888888888888*ación del usuario");
+      }
+    );
   } else {
     AlertManager.showWarning(
       "El usuario será modificado",
